@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The House Burger</title>
+<style>
+body{
+    margin:0;
+    font-family: Arial, sans-serif;
+    background:#111;
+    color:white;
+}
+header{
+    text-align:center;
+    padding:40px 20px;
+    background:#000;
+}
+header h1{
+    font-size:40px;
+    letter-spacing:3px;
+}
+.container{
+    max-width:500px;
+    margin:auto;
+    padding:20px;
+}
+select{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border-radius:8px;
+    border:none;
+    font-size:16px;
+}
+.total{
+    font-size:22px;
+    margin:20px 0;
+    text-align:center;
+}
+button{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:10px;
+    font-size:18px;
+    background:#25D366;
+    color:white;
+    cursor:pointer;
+}
+button:hover{
+    opacity:0.9;
+}
+</style>
+</head>
+<body>
+
+<header>
+    <h1>THE HOUSE</h1>
+    <p>Monte seu Burger</p>
+</header>
+
+<div class="container">
+
+<label>Pão</label>
+<select id="pao" onchange="calcular()">
+    <option value="0">Brioche</option>
+    <option value="2">Australiano (+2)</option>
+</select>
+
+<label>Carne</label>
+<select id="carne" onchange="calcular()">
+    <option value="18">1 Carne 150g (Base)</option>
+    <option value="26">2 Carnes 150g (+8)</option>
+    <option value="33">3 Carnes 150g (+15)</option>
+</select>
+
+<label>Queijo</label>
+<select id="queijo" onchange="calcular()">
+    <option value="0">Cheddar</option>
+    <option value="0">Mussarela</option>
+    <option value="4">Duplo Queijo (+4)</option>
+</select>
+
+<label>Adicional</label>
+<select id="extra" onchange="calcular()">
+    <option value="0">Nenhum</option>
+    <option value="5">Bacon (+5)</option>
+    <option value="3">Ovo (+3)</option>
+    <option value="3">Cebola Caramelizada (+3)</option>
+</select>
+
+<div class="total">
+    Total: R$ <span id="total">18</span>
+</div>
+
+<button onclick="enviarWhats()">Finalizar no WhatsApp</button>
+
+</div>
+
+<script>
+function calcular(){
+    let pao = parseFloat(document.getElementById("pao").value);
+    let carne = parseFloat(document.getElementById("carne").value);
+    let queijo = parseFloat(document.getElementById("queijo").value);
+    let extra = parseFloat(document.getElementById("extra").value);
+
+    let total = pao + carne + queijo + extra;
+    document.getElementById("total").innerText = total.toFixed(2);
+}
+
+function enviarWhats(){
+    let paoText = document.getElementById("pao").options[document.getElementById("pao").selectedIndex].text;
+    let carneText = document.getElementById("carne").options[document.getElementById("carne").selectedIndex].text;
+    let queijoText = document.getElementById("queijo").options[document.getElementById("queijo").selectedIndex].text;
+    let extraText = document.getElementById("extra").options[document.getElementById("extra").selectedIndex].text;
+    let total = document.getElementById("total").innerText;
+
+    let mensagem = `Pedido The House 🍔%0A` +
+                   `Pão: ${paoText}%0A` +
+                   `Carne: ${carneText}%0A` +
+                   `Queijo: ${queijoText}%0A` +
+                   `Extra: ${extraText}%0A` +
+                   `Total: R$ ${total}`;
+
+    window.open(`https://wa.me/SEUNUMERO?text=${mensagem}`);
+}
+</script>
+
+</body>
+</html>
